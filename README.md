@@ -20,7 +20,7 @@ python setup.py install
 
 ## Common Issues 
 ### Solver / GLPK Related
-#### I ran into an issue with this on Mac when trying to incorporate the PyPortfolioOpt module
+I ran into an issue with this on Mac when trying to incorporate the PyPortfolioOpt module
 ```
 brew install gsl fftw suite-sparse glpk
 git clone https://github.com/cvxopt/cvxopt.git
