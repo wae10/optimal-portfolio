@@ -5,8 +5,8 @@
 # Setup
 ## Virtual Environment
 ```
-envcreate optimal
-workon optimal
+pyenv virtualenv 3.9.0 optimal
+pyenv activate optimal
 ```
 
 ## Installation
