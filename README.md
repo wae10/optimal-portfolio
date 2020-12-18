@@ -1,16 +1,18 @@
 
-## Setup
+# Setup
 ## Virtual Environment
-envcreate optimal
+```envcreate optimal
 workon optimal
+```
 
 ## Installation
-download PyPortfolioOpt module to virtual environment
-```https://github.com/robertmartin8/PyPortfolioOpt```
-```python setup.py install```
+Download PyPortfolioOpt module to virtual environment
+```https://github.com/robertmartin8/PyPortfolioOpt
+python setup.py install
+```
 
 ## Usage
-python script.py
+```python script.py```
 
 ## Common Issues 
 ### Solver / GLPK Related
