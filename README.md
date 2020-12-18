@@ -1,7 +1,8 @@
 
 # Setup
 ## Virtual Environment
-```envcreate optimal
+```
+envcreate optimal
 workon optimal
 ```
 
