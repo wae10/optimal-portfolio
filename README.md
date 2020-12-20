@@ -12,7 +12,11 @@ pyenv activate optimal
 
 ## Installation
 Download PyPortfolioOpt module in virtual environment.
-```https://github.com/robertmartin8/PyPortfolioOpt
+```
+https://github.com/robertmartin8/PyPortfolioOpt
+```
+Then run:
+```
 python setup.py install
 ```
 
