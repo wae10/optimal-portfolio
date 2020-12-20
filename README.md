@@ -15,9 +15,13 @@ Download PyPortfolioOpt module in virtual environment.
 ```
 https://github.com/robertmartin8/PyPortfolioOpt
 ```
-Then run:
+Clone/download the project and run:
 ```
 python setup.py install
+```
+Or:
+```
+pip install PyPortfolioOpt
 ```
 
 ## Usage
