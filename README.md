@@ -23,6 +23,10 @@ Or:
 ```
 pip install PyPortfolioOpt
 ```
+Next install the rest of modules.
+```
+pip install -r requirements.txt
+```
 
 ## Usage
 ```python script.py```
