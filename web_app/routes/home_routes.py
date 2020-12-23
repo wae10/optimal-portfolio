@@ -53,7 +53,7 @@ import base64
 
 @home_routes.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(home_routes.root_path), 'favicon.ico', mimetype='image/png')
+    return send_from_directory(os.path.join(home_routes.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @home_routes.route("/plot/done", methods=["POST"])
