@@ -51,10 +51,9 @@ plt.switch_backend('Agg')
 import base64
 
 
-# @home_routes.route('/favicon.ico')
-# def favicon():
-#     return send_from_directory(os.path.join(home_routes.root_path, 'static'), 'favicon.ico', type="image/x-icon")
-
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico')
 
 @home_routes.route("/plot/done", methods=["POST"])
 def plot():
