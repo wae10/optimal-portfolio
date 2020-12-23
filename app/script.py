@@ -11,9 +11,13 @@ from pypfopt.cla import CLA
 from pypfopt.plotting import plot_weights
 from matplotlib.ticker import FuncFormatter
 from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
-from functions import plot_efficient_frontier
+from app.functions import plot_efficient_frontier
 from collections import namedtuple
 
+#NEW
+from dotenv import load_dotenv
+import os
+from app import APP_ENV
 
 def optimal_shares(tickers, start, end):
     """Returns optimal llocation to individual assets to maximize sharpe ratio of portfolio
@@ -64,8 +68,8 @@ def optimal_shares(tickers, start, end):
     print("Optimal shares to buy:", allocation)
     print("Leftover Fund value in $ after building minimum volatility portfolio is ${:.2f}".format(leftover))
 
-def graph_ef(tickers, start, end):
-    """Displays graph of efficient frontier given list of stocks
+def get_cla(tickers, start, end):
+    """Returns CLA object for plot_efficient_frontier param
 
     Args:
         tickers (list): list of desired stock tickers
@@ -98,7 +102,8 @@ def graph_ef(tickers, start, end):
     Sigma = risk_models.sample_cov(df_stocks)
 
     cla = CLA(mu, Sigma, weight_bounds=(-1,1))
-    plot_efficient_frontier(cla, points=100, show_assets=True)
+
+    return cla
 
 def graph_closes(tickers, start, end):
     """Graphs stacked daily closed for all stocks
@@ -220,7 +225,8 @@ def menu():
             optimal_shares(tickers, start, end)
 
         elif choice==2:
-            graph_ef(tickers,start,end)
+            cla = get_cla(tickers,start,end)
+            plot_efficient_frontier(cla, points=100, show_assets=True)
 
         elif choice==3:
             graph_closes(tickers,start,end)
@@ -239,4 +245,6 @@ def main():
     menu()
 
 if __name__ == "__main__":
-    main()
+    if APP_ENV == "development":
+
+        main()

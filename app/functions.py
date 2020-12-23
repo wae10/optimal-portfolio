@@ -1,6 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from dotenv import load_dotenv
+import os
+from app import APP_ENV
+
+
 def _plot_io(**kwargs):
     """
     Helper method to optionally save the figure to file.
@@ -66,5 +71,5 @@ def plot_efficient_frontier(cla, points=100, show_assets=True, **kwargs):
     ax.set_xlabel("Risk (Std Dev)")
     ax.set_ylabel("Return") #expected return, based on annualized return calculated
 
-    _plot_io(**kwargs)
-    return ax
+    # _plot_io(**kwargs)
+    return fig, ax

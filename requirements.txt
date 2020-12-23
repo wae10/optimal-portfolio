@@ -1,2 +1,8 @@
 matplotlib
 pandas_datareader
+
+#NEW
+Flask
+# heroku needs this to run our app on the server
+gunicorn
+python-dotenv

@@ -1,0 +1,49 @@
+{% extends "bootstrap_layout.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+
+    <style>
+        h1{
+            text-align: center;
+        }
+        p{
+            text-align: center;
+        }
+    </style>
+
+    <h1>Welcome to the Optimal Portfolio Calculator</h1>
+    <br>
+
+    <p>Enter three stocks to view efficient frontier graph.</p>
+    <p>The site is currently under development, but enjoy this demo in the mean time :)</p>
+    <br>
+
+
+    <form action="/plot/done" method="POST" >
+
+        <label>Stock 1:</label>
+        <input type="text" name="stock_1" placeholder="enter ticker">
+        <br>
+
+        <label>Stock 2:</label>
+        <input type="text" name="stock_2" placeholder="enter ticker">
+        <br>
+
+        <label>Stock 3:</label>
+        <input type="text" name="stock_3" placeholder="enter ticker">
+        <br>
+
+
+        <label>Start Date:</label>
+        <input type="text" name="start"  placeholder="YYYY-MM-DD" >
+        <br>
+   
+
+        <label>End Date:</label>
+        <input type="text" name="end" placeholder="YYYY-MM-DD">
+        <br>
+        <button>Submit</button>
+    </form>
+    
+{% endblock %}
