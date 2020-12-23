@@ -10,10 +10,22 @@ pyenv virtualenv 3.9.0 optimal
 pyenv activate optimal
 ```
 
-## Installation
-Download PyPortfolioOpt module to virtual environment
-```https://github.com/robertmartin8/PyPortfolioOpt
+## Packages
+Download PyPortfolioOpt package in virtual environment.
+```
+https://github.com/robertmartin8/PyPortfolioOpt
+```
+Clone/download the project and run:
+```
 python setup.py install
+```
+Or:
+```
+pip install PyPortfolioOpt
+```
+Next install the rest of packages.
+```
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -21,7 +33,7 @@ python setup.py install
 
 ## Common Issues 
 ### Solver / GLPK Related
-I ran into an issue with this on Mac when trying to incorporate the PyPortfolioOpt module
+I ran into an issue with this on Mac when trying to incorporate the PyPortfolioOpt package. This fixed it:
 ```
 brew install gsl fftw suite-sparse glpk
 git clone https://github.com/cvxopt/cvxopt.git
