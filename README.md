@@ -2,28 +2,22 @@
 ![efficient portfolio graph](https://github.com/wae10/optimal-portfolio/blob/main/images/efficient_portfolio.png)
 ![terminal menu](https://github.com/wae10/optimal-portfolio/blob/main/images/terminal.png)
 
+# Currently Running on a Heroku Web App
+Access the demo at:
+```
+https://my-optimal-portfolio.herokuapp.com/
+```
 
-# Setup
+# Setup Instructions for More Functionality
 ## Virtual Environment
+Create a virtual environment to store packages. Example:
 ```
 pyenv virtualenv 3.9.0 optimal
 pyenv activate optimal
 ```
 
 ## Packages
-Download PyPortfolioOpt package in virtual environment.
-```
-https://github.com/robertmartin8/PyPortfolioOpt
-```
-Clone/download the project and run:
-```
-python setup.py install
-```
-Or:
-```
-pip install PyPortfolioOpt
-```
-Next install the rest of packages.
+Install packages in virtual environment with pip.
 ```
 pip install -r requirements.txt
 ```
