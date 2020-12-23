@@ -44,3 +44,4 @@ export CVXOPT_BUILD_GLPK=1    # optional
 export CVXOPT_BUILD_GSL=1     # optional
 python setup.py install
 ```
+ 
