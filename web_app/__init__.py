@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from flask import Flask
 
 from web_app.routes.home_routes import home_routes
-from web_app import static
 
 
 load_dotenv()
