@@ -50,7 +50,7 @@ from collections import namedtuple
 plt.switch_backend('Agg')
 import base64
 
-@app.route('/favicon.ico')
+@home_routes.route('/favicon.ico')
 def hello():
     return redirect(url_for('static', filename='favicon.ico'), code=302)
 
