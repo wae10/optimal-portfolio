@@ -14,6 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", default="super secret")
 
 def create_app():
     app = Flask(__name__)
+    app.add_url_rule('/favicon.ico',redirect_to=url_for('static', filename='favicon.ico'))
     app.config["SECRET_KEY"] = SECRET_KEY
 
     app.register_blueprint(home_routes)
@@ -22,6 +23,4 @@ def create_app():
 
 if __name__ == "__main__":
     my_app = create_app()
-    webbrowser.open("http://127.0.0.1:5000/")
-
     my_app.run(debug=True)
