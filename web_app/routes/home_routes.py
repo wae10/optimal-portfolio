@@ -1,6 +1,6 @@
 # web_app/routes/home_routes.py
 
-from flask import Blueprint, render_template, redirect, request, flash, send_file, make_response
+from flask import Blueprint, render_template, redirect, request, flash, send_file, make_response, send_from_directory
 
 from app.script import get_cla
 from app.functions import plot_efficient_frontier
@@ -49,6 +49,11 @@ from collections import namedtuple
 
 plt.switch_backend('Agg')
 import base64
+
+
+@home_routes.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(home_routes.root_path), 'favicon.ico', mimetype='image/png')
 
 
 @home_routes.route("/plot/done", methods=["POST"])
