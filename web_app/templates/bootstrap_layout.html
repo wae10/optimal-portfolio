@@ -2,11 +2,10 @@
 <html>
 <head>
     {% block title %}
-    <title>My Finance Web App.</title>
+    <title>Portfolio Optimizer.</title>
     {% endblock %}
 
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
 
 
@@ -31,14 +30,14 @@
     <!-- SITE NAVIGATION -->
     <!-- see: https://jinja.palletsprojects.com/en/2.11.x/tricks/ -->
     <!-- see: https://getbootstrap.com/docs/4.0/components/navbar/ -->
-    <!-- {% set nav_links = [
-    ('/about', 'about', 'About'),
-    ('/weather/form', 'weather_form', 'Get Forecast'),
-    ('/users/new', 'new_user', 'Sign Up')
-    ] -%} -->
-    <!-- {% set active_page = active_page|default('index') -%}
+    {% set nav_links = [
+    ('/', 'home', 'Home'),
+    ('/', 'home', 'TODO'),
+    ('/', 'home', 'TODO')
+    ] -%}
+    {% set active_page = active_page|default('index') -%}
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="/">Optimal Portfolio Calculator</a>
+    <a class="navbar-brand" href="/"> <span style='font-size:20px;'> <img src="../static/favicon.ico" alt="icon" style="width:35px;height:35px;"> </span> Optimal Portfolio Calculator</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -56,7 +55,7 @@
         {% endfor %}
         </div>
     </ul>
-    </nav> -->
+    </nav>
 
 
     <div class="container" style="margin-top:2em;">
