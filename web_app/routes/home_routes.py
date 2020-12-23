@@ -53,7 +53,7 @@ import base64
 
 @home_routes.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico')
+    return send_from_directory(os.path.join(app.root_path),'favicon.ico')
 
 @home_routes.route("/plot/done", methods=["POST"])
 def plot():
