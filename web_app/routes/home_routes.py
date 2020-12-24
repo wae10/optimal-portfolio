@@ -110,7 +110,8 @@ def index():
 def enter_num_stocks():
     print("ENTERING NUMBER OF STOCKS...")
     data = dict(request.form)
-    num = data["stock_num"]
+    num = int(data["stock_num"])
+    print(num)
     return render_template('home2.html', num=num)
 
 @home_routes.route("/plot/done", methods=["POST"])
