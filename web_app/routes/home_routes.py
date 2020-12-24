@@ -2,7 +2,7 @@
 
 from flask import Blueprint, render_template, redirect, request, flash, send_file, make_response, send_from_directory, url_for
 
-from app.script import get_cla
+from app.script import get_cla, optimal_shares
 from app.functions import plot_efficient_frontier, plot_efficient_frontier2
 
 
@@ -139,6 +139,34 @@ def enter_score():
 
     img = base64.b64encode(bytesObj.getvalue())
 
+    #RESULTS DESCRIPTION
+    amount = 10000 #default 10,0000 dollar amount invested
+    allocation, leftover, performance = optimal_shares(lst, start, end, amount)
 
-    return render_template('results.html', img=img.decode('ascii'))
+    print("ALLOCATION: ", allocation)
+
+    #convert dict to list for access in html
+    keys = list(allocation)
+
+    print("LIST(ALLOCATION) aka keys: ", keys)
+
+    performance = list(performance)
+
+    print(performance)
+
+    #formatting
+
+    performance[0] = performance[0] * 100
+    performance[1] = performance[1] * 100
+    
+    performance[0] = "{:.2f}%".format(performance[0]) 
+    performance[1] = "{:.2f}%".format(performance[1])
+    performance[2] = "{:.2f}".format(performance[2])
+
+    leftover = "${:.2f}".format(leftover)
+
+    #length of 'allocation' dictionary
+    length = len(allocation)
+
+    return render_template('results.html', img=img.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance)
 

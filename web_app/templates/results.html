@@ -1,8 +1,9 @@
+
+
 {% extends "bootstrap_layout.html" %}
 
-
-
 {% block content %}
+
 
     <style>
         .center{
@@ -11,11 +12,186 @@
             margin-right: auto;
             width: 50%;
         }
+
+        /* Split the screen in half */
+        .split {
+        height: 100%;
+        width: 50%;
+        position:fixed;
+        z-index: -2;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+        }
+
+        /* Control the left side */
+        .left {
+        left: 0;
+        /* background-color: #111; */
+        }
+
+        /* Control the right side */
+        .right {
+        right: 0;
+        /* background-color: red; */
+        }
+
+        /* If you want the content centered horizontally and vertically */
+        .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align:left;
+        }
+
+        /* Style the image inside the centered container, if needed */
+        .centered img {
+        width: 600px;
+        /* border-radius: 50%; */
+        }
+
+
+
+        h2:after {
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 1px 1px rgba(0,0,0,0.5), 
+                0 1px 1px rgba(255,255,255,0.3);
+        }
+
+        h2:after { background: #047bff; }
+        /* h3:after { background: #047bff; } */
+        /* h4:after { background: #047bff; } */
+
+        h1 {
+            font-size: 36px;
+            line-height: 40px;
+            margin: 1em 0 .6em 0;
+            font-weight: normal;
+            color: white;
+            font-family: 'Hammersmith One', sans-serif;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+            position: relative;
+            color: #047bff;
+        }
+
+        h2 {
+            margin: 1em 0 .6em 0;
+            padding: 0 0 0 20px;
+            font-weight: normal;
+            color: black;
+            font-family: 'Hammersmith One', sans-serif;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+            position: relative;
+            font-size: 30px;
+            line-height: 40px;
+        }
+
+        h3 {
+            margin: 1em 0 .6em 0;
+            padding: 0 0 0 20px;
+            font-weight: normal;
+            color: black;
+            font-family: 'Hammersmith One', sans-serif;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+            position: relative;
+            font-size: 24px;
+            line-height: 40px;
+            font-family: 'Questrial', sans-serif;
+        }
+
+        h4 { 
+            margin: 1em 0 .6em 0;
+            padding: 0 0 0 20px;
+            font-weight: normal;
+            color: black;
+            font-family: 'Hammersmith One', sans-serif;
+            /* text-shadow: 0 -1px 0 rgba(0,0,0,0.4); */
+            position: relative;
+            font-size: 18px;
+            line-height: 20px;
+            font-family: 'Questrial', sans-serif;
+        }
+
+        .ital {
+            font-style: italic;
+        }
+
+
+
     </style>
 
-    <h1>Results</h1>
+<!-- temp fix for issue with footer -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <div class="split left">
+        <div class="centered">
+
+            <h1>Results</h1>
+
+            <h2>Expected Portfolio Performance</h2>
+
+            <h4>Expected Excess Return: {{performance[0]}}</h4>
+
+            <h4>Volatility: {{performance[1]}}</h4>
+
+            <h4>Sharpe Ratio: {{performance[2]}}</h4>
+
+
+            <h2>Optimal Weights</h2>
+            <h3>According to the model, if your initial investment is $10,000, then...</h3>
+            <h4>Optimal shares to buy:</h4>
+
+            {%for i in range(length)%} 
+                <h4>{{keys[i]}}: {{allocation[keys[i]]}} shares</h4>
+            {%endfor%} 
+
+            <h4 class="ital">***Leftover fund value in $ after building maximum sharpe ratio portfolio is {{leftover}}</h4>
+        </div>
+    </div>
+        
+    <div class="split right">
+        <div class="centered">        
     
-    <img src="data:image/PNG;base64,{{img}}" class="center">
+            <img src="data:image/PNG;base64,{{img}}">
 
+        </div>
+    </div>
 
+    
 {% endblock %}

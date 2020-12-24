@@ -69,7 +69,12 @@ def optimal_shares(tickers, start, end, amount):
     #Min Volatility Portfolio Allocation $10000
     allocation, leftover = DiscreteAllocation(sharpe_pwt, latest_prices, total_portfolio_value=amount).lp_portfolio()
     print("Optimal shares to buy:", allocation)
-    print("Leftover Fund value in $ after building minimum volatility portfolio is ${:.2f}".format(leftover))
+    print("Leftover Fund value in $ after building maximum sharpe ratio portfolio is ${:.2f}".format(leftover))
+
+    #performance = "calculates the expected return, volatility and Sharpe ratio for the optimised portfolio."
+    performance = ef.portfolio_performance()
+
+    return allocation, leftover, performance
 
 def get_cla(tickers, start, end):
     """Returns CLA object for plot_efficient_frontier param as well as start / end dates
@@ -226,7 +231,7 @@ def menu():
         
         if choice==1:
             amount = eval(input("Enter amount you want to invest (format as number): "))     
-            optimal_shares(tickers, start, end, amount)
+            allocation, leftover, performance = optimal_shares(tickers, start, end, amount)
 
         elif choice==2:
             cla, start, end = get_cla(tickers,start,end)

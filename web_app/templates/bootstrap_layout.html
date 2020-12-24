@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
 
-
 </head>
 
-<body>
+<body style="background-color:	#DCDCDC;">
 
     <!-- FLASH MESSAGING -->
     <!-- see: http://flask.pocoo.org/docs/1.0/patterns/flashing/#flashing-with-categories -->
@@ -32,10 +31,7 @@
     <!-- see: https://jinja.palletsprojects.com/en/2.11.x/tricks/ -->
     <!-- see: https://getbootstrap.com/docs/4.0/components/navbar/ -->
     {% set nav_links = [
-    ('/', 'home1', 'Home'),
-    ('/', 'home1', 'TODO'),
-    ('/', 'home1', 'TODO')
-    ] -%}
+    ('/', 'home1', 'Home')] -%}
     {% set active_page = active_page|default('index') -%}
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="/"> <span style='font-size:20px;'> <img src="../static/favicon.ico" alt="icon" style="width:35px;height:35px;"> </span> Optimal Portfolio Calculator</a>
