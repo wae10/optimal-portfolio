@@ -11,15 +11,15 @@ from pypfopt.cla import CLA
 from pypfopt.plotting import plot_weights
 from matplotlib.ticker import FuncFormatter
 from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
-from functions import plot_efficient_frontier, plot_efficient_frontier1
+from app.functions import plot_efficient_frontier, plot_efficient_frontier1
 from collections import namedtuple
 
 #NEW
 from dotenv import load_dotenv
 import os
-# from app import APP_ENV
+from app import APP_ENV
 
-from __init__ import APP_ENV
+# from __init__ import APP_ENV
 
 def optimal_shares(tickers, start, end, amount):
     """Returns optimal llocation to individual assets to maximize sharpe ratio of portfolio
