@@ -11,7 +11,7 @@ from pypfopt.cla import CLA
 from pypfopt.plotting import plot_weights
 from matplotlib.ticker import FuncFormatter
 from pypfopt.discrete_allocation import DiscreteAllocation, get_latest_prices
-from app.functions import plot_efficient_frontier, plot_efficient_frontier1
+from app.functions import plot_efficient_frontier
 from collections import namedtuple
 
 #NEW
@@ -230,7 +230,7 @@ def menu():
 
         elif choice==2:
             cla, start, end = get_cla(tickers,start,end)
-            plot_efficient_frontier1(cla, start, end, points=100, show_assets=True)
+            plot_efficient_(cla, start, end, points=100, show_assets=True)
 
         elif choice==3:
             graph_closes(tickers,start,end)

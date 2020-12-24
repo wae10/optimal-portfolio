@@ -89,8 +89,9 @@ def plot_efficient_frontier(cla, start, end, points=100, show_assets=True, **kwa
     plt.yticks(fontsize= 13)
 
 
-    # _plot_io(**kwargs)
+    _plot_io(**kwargs)
     return fig, ax
+
 
 
 def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kwargs):
