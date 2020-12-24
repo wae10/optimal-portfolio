@@ -104,8 +104,14 @@ def hello():
 def index():
     print("VISITED THE HOME PAGE")
     #return "Welcome Home (TODO)"
-    return render_template("home.html")
+    return render_template("home1.html")
 
+@home_routes.route("/num-stocks", methods=["POST"])
+def enter_num_stocks():
+    print("ENTERING NUMBER OF STOCKS...")
+    data = dict(request.form)
+    num = data["stock_num"]
+    return render_template('home2.html', num=num)
 
 @home_routes.route("/plot/done", methods=["POST"])
 def enter_score():
@@ -113,9 +119,9 @@ def enter_score():
     print("FORM DATA:", dict(request.form)) #> {'full_name': 'Example User', 'email_address': 'me@example.com', 'country': 'US'}
     params = dict(request.form)
     tickers = []
-    tickers.append(params["stock_1"])
-    tickers.append(params["stock_2"])
-    tickers.append(params["stock_3"])
+
+    for i in range(1, len(params)-1):   
+        tickers.append(params["stock_"+str(i)])
 
     # Converting 
     lst = [x.upper() for x in tickers] 

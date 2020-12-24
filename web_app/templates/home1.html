@@ -1,0 +1,30 @@
+{% extends "bootstrap_layout.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+
+    <style>
+        h1{
+            text-align: center;
+        }
+        p{
+            text-align: center;
+        }
+    </style>
+
+    <h1>Welcome to the Optimal Portfolio Calculator</h1>
+    <br>
+
+    <p>Enter stocks and view analysis.</p>
+    <p>The site is currently under development, but enjoy this demo in the mean time :)</p>
+    <br>
+
+    <form action="/num-stocks" method="POST" >
+
+        <label>How many stocks in your portfolio? </label>
+        <input type="number" name="stock_num" placeholder="i.e. 5">
+        <br>
+        <button>Submit</button>
+    </form>
+    
+{% endblock %}

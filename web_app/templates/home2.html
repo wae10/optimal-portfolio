@@ -12,26 +12,24 @@
         }
     </style>
 
-    <h1>Welcome to the Optimal Portfolio Calculator</h1>
+    <!-- <h1>Welcome to the Optimal Portfolio Calculator</h1>
     <br>
 
     <p>Enter three stocks to view efficient frontier graph.</p>
     <p>The site is currently under development, but enjoy this demo in the mean time :)</p>
-    <br>
+    <br> -->
 
     <form action="/plot/done" method="POST" >
 
-        <label>Stock 1:</label>
-        <input type="text" name="stock_1" placeholder="enter ticker">
-        <br>
+        <h2>Stocks:</h2>
 
-        <label>Stock 2:</label>
-        <input type="text" name="stock_2" placeholder="enter ticker">
+        {%for i in range(1, 4)%} 
+        <label>Ticker {{i}}:</label>
+            <input type="text" name="stock_{{+ i}}" placeholder="enter ticker">
         <br>
+        {%endfor%} 
 
-        <label>Stock 3:</label>
-        <input type="text" name="stock_3" placeholder="enter ticker">
-        <br>
+        <h2>Timeline:</h2>
 
         <label>Start Date:</label>
         <input type="text" name="start"  placeholder="YYYY-MM-DD" >
