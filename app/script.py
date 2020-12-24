@@ -69,7 +69,7 @@ def optimal_shares(tickers, start, end):
     print("Leftover Fund value in $ after building minimum volatility portfolio is ${:.2f}".format(leftover))
 
 def get_cla(tickers, start, end):
-    """Returns CLA object for plot_efficient_frontier param
+    """Returns CLA object for plot_efficient_frontier param as well as start / end dates
 
     Args:
         tickers (list): list of desired stock tickers
@@ -103,7 +103,7 @@ def get_cla(tickers, start, end):
 
     cla = CLA(mu, Sigma, weight_bounds=(-1,1))
 
-    return cla
+    return cla, start, end
 
 def graph_closes(tickers, start, end):
     """Graphs stacked daily closed for all stocks
@@ -225,8 +225,8 @@ def menu():
             optimal_shares(tickers, start, end)
 
         elif choice==2:
-            cla = get_cla(tickers,start,end)
-            plot_efficient_frontier(cla, points=100, show_assets=True)
+            cla, start, end = get_cla(tickers,start,end)
+            plot_efficient_frontier(cla, start, end, points=100, show_assets=True)
 
         elif choice==3:
             graph_closes(tickers,start,end)

@@ -27,7 +27,7 @@ def _plot_io(**kwargs):
     if showfig:
         plt.show()
 
-def plot_efficient_frontier(cla, points=100, show_assets=True, **kwargs):
+def plot_efficient_frontier(cla, start, end, points=100, show_assets=True, **kwargs):
     """
     Plot the efficient frontier based on a CLA object
 
@@ -52,24 +52,38 @@ def plot_efficient_frontier(cla, points=100, show_assets=True, **kwargs):
     mus, sigmas, _ = cla.frontier_values
 
     fig, ax = plt.subplots()
-    ax.plot(sigmas, mus, label="Efficient frontier")
+    ax.plot(sigmas, mus, label="Efficient Frontier", linewidth=3)
 
     if show_assets:
         ax.scatter(
             np.sqrt(np.diag(cla.cov_matrix)),
             cla.expected_returns,
-            s=30,
+            s=120,
             color="k",
             label="Assets",
         )
         #NEW...
         for i in range(len(cla.tickers)):
-            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i],cla.expected_returns[i], cla.tickers[i])
+            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.005,cla.expected_returns[i] + 0.005, cla.tickers[i], fontsize=15, ha='left')
 
-    ax.scatter(optimal_risk, optimal_ret, marker="X", s=100, color="r", label="Optimal")
+
+
+
+    ax.scatter(optimal_risk, optimal_ret, marker="X", s=200, color="r", label="Optimal (Max Sharpe Ratio)")
     ax.legend()
-    ax.set_xlabel("Risk (Std Dev)")
-    ax.set_ylabel("Return") #expected return, based on annualized return calculated
+    ax.set_xlabel("Standard Deviation", fontsize=20)
+    ax.set_ylabel("Expected Return", fontsize=20) #expected return, based on annualized return calculated
+
+    title = "Efficient Frontier \n(based on rtns from " + start + " to " + end + ")"
+
+    plt.title(label=title,fontsize=27,pad=20)
+
+    plt.legend(prop={"size":13})
+
+    plt.xticks(fontsize= 13)
+
+    plt.yticks(fontsize= 13)
+
 
     # _plot_io(**kwargs)
     return fig, ax

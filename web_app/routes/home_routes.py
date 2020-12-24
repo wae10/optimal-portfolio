@@ -50,6 +50,9 @@ from collections import namedtuple
 plt.switch_backend('Agg')
 import base64
 
+import matplotlib.figure as mplfigure
+
+
 @home_routes.route('/favicon.ico')
 def hello():
     return redirect(url_for('static', filename='favicon.ico'), code=302)
@@ -71,15 +74,25 @@ def plot():
     tickers.append(params["stock_2"])
     tickers.append(params["stock_3"])
 
+    # Converting 
+    lst = [x.upper() for x in tickers] 
+    print(lst)
+
     start = params["start"]
     end = params["end"]
 
-    cla = get_cla(tickers, start, end)
+    cla, start, end = get_cla(lst, start, end)
 
     points=100
     show_assets=True
 
-    fig, ax = plot_efficient_frontier(cla,points,show_assets=True)
+    fig, ax = plot_efficient_frontier(cla,start,end,points,show_assets=True)
+
+    width = 1000
+    height = 1000
+    # fig = mplfigure.Figure(frameon=False)
+    dpi = fig.get_dpi()
+    fig.set_size_inches(width / dpi, height / dpi)
 
     canvas = FigureCanvas(fig)
     output = io.BytesIO()
