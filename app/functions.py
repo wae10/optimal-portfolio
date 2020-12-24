@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 import os
 from app import APP_ENV
 
+import io
+from io import BytesIO
+
 # from __init__ import APP_ENV
 
 def _plot_io(**kwargs):
@@ -90,7 +93,7 @@ def plot_efficient_frontier(cla, start, end, points=100, show_assets=True, **kwa
     return fig, ax
 
 
-def plot_efficient_frontier1(cla, start, end, points=100, show_assets=True, **kwargs):
+def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kwargs):
     """
     Plot the efficient frontier based on a CLA object
 
@@ -130,8 +133,6 @@ def plot_efficient_frontier1(cla, start, end, points=100, show_assets=True, **kw
             plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.005,cla.expected_returns[i] + 0.005, cla.tickers[i], fontsize=15, ha='left')
 
 
-
-
     ax.scatter(optimal_risk, optimal_ret, marker="X", s=200, color="r", label="Optimal (Max Sharpe Ratio)")
     ax.legend()
     ax.set_xlabel("Standard Deviation", fontsize=20)
@@ -147,6 +148,15 @@ def plot_efficient_frontier1(cla, start, end, points=100, show_assets=True, **kw
 
     plt.yticks(fontsize= 13)
 
+    width = 1000
+    height = 1000
+    # fig = mplfigure.Figure(frameon=False)
+    dpi = fig.get_dpi()
+    fig.set_size_inches(width / dpi, height / dpi)
 
-    _plot_io(**kwargs)
-    return fig, ax
+    # here is the trick save your figure into a bytes object and you can afterwards expose it via flas
+    bytes_image = io.BytesIO()
+    plt.savefig(bytes_image, format='png')
+    bytes_image.seek(0)
+
+    return bytes_image
