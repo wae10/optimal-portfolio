@@ -75,8 +75,8 @@ def plot_efficient_frontier(cla, start, end, points=100, show_assets=True, **kwa
 
     ax.scatter(optimal_risk, optimal_ret, marker="X", s=200, color="r", label="Optimal (Max Sharpe Ratio)")
     ax.legend()
-    ax.set_xlabel("Standard Deviation", fontsize=20)
-    ax.set_ylabel("Expected Return", fontsize=20) #expected return, based on annualized return calculated
+    ax.set_xlabel("Risk", fontsize=20)
+    ax.set_ylabel("Returns", fontsize=20) #expected return, based on annualized return calculated
 
     title = "Efficient Frontier \n(based on rtns from " + start + " to " + end + ")"
 
@@ -134,8 +134,8 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
 
     ax.scatter(optimal_risk, optimal_ret, marker="X", s=200, color="r", label="Optimal (Max Sharpe Ratio)")
     ax.legend()
-    ax.set_xlabel("Standard Deviation", fontsize=20)
-    ax.set_ylabel("Expected Return", fontsize=20) #expected return, based on annualized return calculated
+    ax.set_xlabel("Risk", fontsize=20)
+    ax.set_ylabel("Returns", fontsize=20) #expected return, based on annualized return calculated
 
     title = "Efficient Frontier \n(based on rtns from " + start + " to " + end + ")"
 
