@@ -5,20 +5,17 @@
 
     <style>
         .center{
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 50%;
+            text-align: center;
         }
 
         /* Split the screen in half */
         .split {
         height: 100%;
         width: 50%;
-        position:fixed;
-        z-index: -2;
+        position:relative;
+        z-index: 0;
         top: 0;
-        /* overflow-x:hidden; */
+        overflow-x:auto;
         padding-top: 20px;
         }
 
@@ -173,11 +170,11 @@
         }
 
         img.resize{
-            width: 80%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 100%;
+            align-self: center;
+            border: 3px solid #555;
+            /* height: 50%; */
+
         }
 
     </style>
@@ -225,7 +222,7 @@
             <div class="column">
                 <!-- <div class="centered"> -->
         
-                    <h1>Results</h1>
+                    <h1>Explanation of Results</h1>
         
                     <h2>Expected Portfolio Performance</h2>
         
@@ -241,7 +238,7 @@
                     <h4>Optimal shares to buy:</h4>
         
                     {%for i in range(length)%} 
-                        <h4>{{keys[i]}}: {{allocation[keys[i]]}} shares</h4>
+                        <h4><ul>{{keys[i]}}: {{allocation[keys[i]]}} shares</ul></h4>
                     {%endfor%} 
         
                     <h4 class="ital">***Leftover fund value after building maximum sharpe ratio portfolio is {{leftover}}</h4>
@@ -250,13 +247,13 @@
                 
             <div class="column">
                 <!-- <div class="centered">  -->
-                    
-                    <h1> </h1>
-        
-                    <div class="split right">
+
+                    <h1 class="center">Charts</h1>
+                    <h3>
+                    <!-- <div class="split right"> -->
                         <img class="resize" src="data:image/PNG;base64,{{img}}">
-                    </div>
-                    
+                    <!-- </div> -->
+                    </h3>
         
                 <!-- </div> -->
             </div>
