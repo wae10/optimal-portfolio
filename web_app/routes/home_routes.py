@@ -50,55 +50,17 @@ import base64
 
 import matplotlib.figure as mplfigure
 
+#for storing variables
+class DataStore():
+    num = None
+    amount = None
+
+data = DataStore()
+
 
 @home_routes.route('/favicon.ico')
-def hello():
+def fav():
     return redirect(url_for('static', filename='favicon.ico'), code=302)
-
-
-# @home_routes.route("/plot/done", methods=["POST"])
-# def plot():
-#     """ Returns html with the plot.
-#     """
-
-#     print("ENTERING PLOT DATA INPUTS")
-
-#     params = dict(request.form)
-
-#     print(params)
-
-#     tickers = []
-#     tickers.append(params["stock_1"])
-#     tickers.append(params["stock_2"])
-#     tickers.append(params["stock_3"])
-
-#     # Converting 
-#     lst = [x.upper() for x in tickers] 
-#     print(lst)
-
-#     start = params["start"]
-#     end = params["end"]
-
-#     cla, start, end = get_cla(lst, start, end)
-
-#     points=100
-#     show_assets=True
-
-#     fig, ax = plot_efficient_frontier(cla,start,end,points,show_assets=True)
-
-#     width = 1000
-#     height = 1000
-#     # fig = mplfigure.Figure(frameon=False)
-#     dpi = fig.get_dpi()
-#     fig.set_size_inches(width / dpi, height / dpi)
-
-#     canvas = FigureCanvas(fig)
-#     output = io.BytesIO()
-#     canvas.print_png(output)
-#     response = make_response(output.getvalue())
-#     response.mimetype = 'image/png'
-#     return render_template('results.html', response=output)
-
 
 @home_routes.route("/")
 def index():
@@ -109,10 +71,14 @@ def index():
 @home_routes.route("/num-stocks", methods=["POST"])
 def enter_num_stocks():
     print("ENTERING NUMBER OF STOCKS...")
-    data = dict(request.form)
-    num = int(data["stock_num"])
+    params = dict(request.form)
+    print(params)
+    num = int(params["stock_num"])
+    amount = int(params["amount"])
     print(num)
-    return render_template('home2.html', num=num)
+    data.num = num
+    data.amount = amount
+    return render_template('home2.html', num=num, amount=amount)
 
 @home_routes.route("/plot/done", methods=["POST"])
 def enter_score():
@@ -140,7 +106,9 @@ def enter_score():
     img = base64.b64encode(bytesObj.getvalue())
 
     #RESULTS DESCRIPTION
-    amount = 10000 #default 10,0000 dollar amount invested
+    # amount = 10000 #default 10,0000 dollar amount invested
+    amount = data.amount
+    print("AMOUNT: ",)
     allocation, leftover, performance = optimal_shares(lst, start, end, amount)
 
     print("ALLOCATION: ", allocation)
@@ -168,5 +136,5 @@ def enter_score():
     #length of 'allocation' dictionary
     length = len(allocation)
 
-    return render_template('results.html', img=img.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance)
+    return render_template('results.html', amount=amount, img=img.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance)
 
