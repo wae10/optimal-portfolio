@@ -68,7 +68,7 @@ def plot_efficient_frontier(cla, start, end, points=100, show_assets=True, **kwa
         )
         #NEW...
         for i in range(len(cla.tickers)):
-            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.005,cla.expected_returns[i] + 0.005, cla.tickers[i], fontsize=15, ha='left')
+            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.0005,cla.expected_returns[i] + 0.0005, cla.tickers[i], fontsize=15, ha='center')
 
 
 
@@ -129,7 +129,7 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
         )
         #NEW...
         for i in range(len(cla.tickers)):
-            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.005,cla.expected_returns[i] + 0.005, cla.tickers[i], fontsize=15, ha='left')
+            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.0005,cla.expected_returns[i] + 0.0005, cla.tickers[i], fontsize=15, ha='center')
 
 
     ax.scatter(optimal_risk, optimal_ret, marker="X", s=200, color="r", label="Optimal (Max Sharpe Ratio)")
