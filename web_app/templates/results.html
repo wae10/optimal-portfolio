@@ -181,44 +181,11 @@
             color: #047bff;
         }
 
+        span {
+            color: #047bff;
+        }
+
     </style>
-
-
-
-    <!-- <div class="opacity">
-        <h1>Results</h1>
-
-        <h2>Expected Portfolio Performance</h2>
-
-        <h4>Expected Excess Return: {{performance[0]}}</h4>
-
-        <h4>Volatility: {{performance[1]}}</h4>
-
-        <h4>Sharpe Ratio: {{performance[2]}}</h4>
-
-
-        <h2>Optimal Weights</h2>
-        <h3>According to the model, if your initial investment is $10,000, then...</h3>
-        <h4>Optimal shares to buy:</h4>
-
-        {%for i in range(length)%} 
-            <h4>{{keys[i]}}: {{allocation[keys[i]]}} shares</h4>
-        {%endfor%} 
-
-        <h4 class="ital">***Leftover fund value in $ after building maximum sharpe ratio portfolio is {{leftover}}</h4>
-         -->
-<!-- TODO temp fix for issue with footer -->
-        <!-- <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>         -->
-
-    <!-- </div>     -->
 
 
     <!-- <div class="fade"> -->
@@ -238,11 +205,11 @@
         
         
                     <h2>Optimal Weights</h2>
-                    <h3>According to the model, if your initial investment is ${{amount}}, then...</h3>
+                    <h3>According to the model, if your initial investment is {{ "${:,.0f}".format(amount) }}</h3>
                     <h4>Optimal shares to buy:</h4>
         
                     {%for i in range(length)%} 
-                        <h4><ul>{{keys[i]}}: {{allocation[keys[i]]}} shares</ul></h4>
+                        <h4><ul><span>&#8594;</span>{{keys[i]}}: {{allocation[keys[i]]}} shares</ul></h4>
                     {%endfor%} 
         
                     <h4 class="ital">***Leftover fund value after building maximum sharpe ratio portfolio is {{leftover}}</h4>
