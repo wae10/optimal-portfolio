@@ -12,6 +12,15 @@
             text-align: center;
         }
 
+        .center-form{
+            text-align: center;
+            /* margin-left: -10%; */
+        }
+
+        .right{
+            right: 0;
+        }
+
         h2:after {
             position: absolute;
             content: "";
@@ -161,6 +170,19 @@
         }
 
 
+        form{
+            text-align: justify;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        input{
+            /* margin-right: 10%; */
+            position: absolute;;
+            right: 15%;
+            width: 150px;
+        }
+
     </style>
 
     <!-- <div class="alert">
@@ -180,17 +202,17 @@
 
     <form action="/num-stocks" method="POST" >
 
-        <h3 class="center">
+        <h3>
             <label>How many stocks in your portfolio? </label>
             <input type="number" name="stock_num" placeholder="i.e. 5">
             <br>
         </h3>
-        <h3 class="center">
+        <h3>
             <label>Initial Investment Amount </label>
             <input type="number" name="amount" placeholder="i.e. 10000">
             <br>
         </h3>
-        <h3 class="center">
+        <h3 class="center-form">
             <button>Submit</button>
         </h3>
     </form>
