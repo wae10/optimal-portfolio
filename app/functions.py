@@ -104,8 +104,8 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     :type filename: str, optional
     :param showfig: whether to plt.show() the figure, defaults to True
     :type showfig: bool, optional
-    :return: matplotlib axis
-    :rtype: matplotlib.axes object
+    :return: bytes_image
+    :rtype: BytesIO
     """
     if cla.weights is None:
         cla.max_sharpe()
@@ -146,6 +146,65 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     plt.xticks(fontsize= 13)
 
     plt.yticks(fontsize= 13)
+
+    width = 1000
+    height = 1000
+    # fig = mplfigure.Figure(frameon=False)
+    dpi = fig.get_dpi()
+    fig.set_size_inches(width / dpi, height / dpi)
+
+    # here is the trick save your figure into a bytes object and you can afterwards expose it via flas
+    bytes_image = io.BytesIO()
+    plt.savefig(bytes_image, format='png')
+    bytes_image.seek(0)
+
+    return bytes_image
+
+def plot_weights(weights, **kwargs):
+    """
+    Plot the portfolio weights as a horizontal bar chart
+    :param weights: the weights outputted by any PyPortfolioOpt optimiser
+    :type weights: {ticker: weight} dict
+    :return: matplotlib axis
+    :rtype: matplotlib.axes object
+    """
+    desc = sorted(weights.items(), key=lambda x: x[1], reverse=True)
+    labels = [i[0] for i in desc]
+    vals = [i[1] for i in desc]
+
+    y_pos = np.arange(len(labels))
+
+    fig, ax = plt.subplots()
+    ax.barh(y_pos, vals)
+    ax.set_xlabel("Weight")
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(labels)
+    ax.invert_yaxis()
+
+    _plot_io(**kwargs)
+    return ax
+
+
+def plot_weights2(weights, **kwargs):
+    """
+    Plot the portfolio weights as a horizontal bar chart
+    :param weights: the weights outputted by any PyPortfolioOpt optimiser
+    :type weights: {ticker: weight} dict
+    :return: bytes_image
+    :rtype: BytesIO
+    """
+    desc = sorted(weights.items(), key=lambda x: x[1], reverse=True)
+    labels = [i[0] for i in desc]
+    vals = [i[1] for i in desc]
+
+    y_pos = np.arange(len(labels))
+
+    fig, ax = plt.subplots()
+    ax.barh(y_pos, vals)
+    ax.set_xlabel("Weight")
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(labels)
+    ax.invert_yaxis()
 
     width = 1000
     height = 1000

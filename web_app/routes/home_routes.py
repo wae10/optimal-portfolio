@@ -2,8 +2,8 @@
 
 from flask import Blueprint, render_template, redirect, request, flash, send_file, make_response, send_from_directory, url_for
 
-from app.script import get_cla, optimal_shares
-from app.functions import plot_efficient_frontier, plot_efficient_frontier2
+from app.script import get_cla, optimal_shares, graph_weights
+from app.functions import plot_efficient_frontier2, plot_weights2
 
 
 
@@ -136,5 +136,17 @@ def enter_score():
     #length of 'allocation' dictionary
     length = len(allocation)
 
-    return render_template('results.html', amount=amount, img=img.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance)
+
+    #GRAPH WEIGHTS PART
+    sharpe_pwt = graph_weights(tickers,start,end)
+    print("SHARPE_PWT", sharpe_pwt)
+
+    bytesObj2 = plot_weights2(sharpe_pwt)
+
+
+    img2 = base64.b64encode(bytesObj2.getvalue())
+
+
+
+    return render_template('results.html', amount=amount, img=img.decode('ascii'), img2=img2.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance)
 

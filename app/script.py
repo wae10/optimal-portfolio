@@ -156,7 +156,7 @@ def graph_closes(tickers, start, end):
     plt.show()
 
 def graph_weights(tickers, start, end):
-    """Displays bar chart of optimal weights to maximize portfolio sharpe ratio
+    """Returns parameter for plot_weights (dict of stocks and optimal weights)
 
     Args:
         tickers (list): list of desired stock tickers
@@ -195,7 +195,8 @@ def graph_weights(tickers, start, end):
     sharpe_pwt=ef.clean_weights()
     # print("Optimal Weights (max sharpe ratio):",sharpe_pwt)
 
-    plot_weights(sharpe_pwt)
+    return sharpe_pwt
+
 
 def print_menu():
     print("\n")
@@ -241,7 +242,9 @@ def menu():
             graph_closes(tickers,start,end)
 
         elif choice==4:
-            graph_weights(tickers,start,end)
+            sharpe_pwt = graph_weights(tickers,start,end)
+            plot_weights(sharpe_pwt)
+
 
         elif choice==5:
             loop=False # This will make the while loop to end as not value of loop is set to False
