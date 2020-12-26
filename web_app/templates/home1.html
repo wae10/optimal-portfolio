@@ -171,18 +171,19 @@
 
 
         form{
-            position: relative;
-            text-align: justify;
+            /* position: relative; */
+            text-align: center;
+            align-items: stretch;
             /* margin-left: 20%; */
-            /* margin-right: 0%; */
-            /* right: 50px; */
+            /* margin-left: 20%; */
+            left: 0;
         }
 
         input{
             /* position: relative; */
             /* margin-right: 50px; */
             /* position: relative; */
-            /* right: 0; */
+            left: 0;
             width: 170px;
         }
 
@@ -203,14 +204,14 @@
         <hr class="hr2">
     </div>
 
-    <form class="center" action="/num-stocks" method="POST" >
+    <form action="/num-stocks" method="POST" >
 
         <h3>
-            <label class="center">Number of Stocks <input class="right" type="number" name="stock_num" placeholder="i.e. 5"></label>
+            <label>Number of Stocks &nbsp;&thinsp;&thinsp;&thinsp;&thinsp;<input class="right" type="number" name="stock_num" placeholder="i.e. 5"></label>
             
         </h3>
         <h3>
-            <label class="center">Investment Amount <input class="right" type="number" name="amount" placeholder="i.e. 10000"></label>
+            <label class="justify">Investment Amount &nbsp;<input class="right" type="number" name="amount" placeholder="i.e. 10000"></label>
             
         </h3>
         <h3 class="center">
