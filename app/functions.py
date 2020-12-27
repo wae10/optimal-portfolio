@@ -109,6 +109,15 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     :rtype: BytesIO
     """
 
+    COLOR = '#E4E6EB'
+    plt.rcParams['text.color'] = COLOR
+    plt.rcParams['axes.labelcolor'] = COLOR
+    plt.rcParams['xtick.color'] = COLOR
+    plt.rcParams['ytick.color'] = COLOR
+    # plt.rcParams['legend.fontcolor'] = COLOR
+    plt.rcParams['legend.frameon'] = True
+
+
     #font config
     matplotlib.rcParams['font.family'] = "sans-serif"
     # csfont = {'fontname':'Comic Sans MS'}
@@ -132,6 +141,9 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     mus, sigmas, _ = cla.frontier_values
 
     fig, ax = plt.subplots()
+    ax.set_facecolor("#3A3B3C")
+    fig.patch.set_facecolor("#3A3B3C")
+
     ax.plot(
         sigmas, 
         mus, 
@@ -144,17 +156,17 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
         ax.scatter(
             np.sqrt(np.diag(cla.cov_matrix)),
             cla.expected_returns,
-            s=300,
+            s=350,
             color="k",
             label="Assets",
-            zorder=2,
+            zorder=4,
         )
         #NEW...
         for i in range(len(cla.tickers)):
-            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.0005,cla.expected_returns[i] + 0.0005, cla.tickers[i], fontsize=labels, ha='center')
+            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.0005,cla.expected_returns[i] + 0.0005, cla.tickers[i], fontsize=labels, ha='center', zorder=5)
 
 
-    ax.scatter(optimal_risk, optimal_ret, zorder=3, s=300, marker="x", linewidths=5, color="r", label="Optimal (Max Sharpe Ratio)")
+    ax.scatter(optimal_risk, optimal_ret, zorder=3, s=350, marker="x", linewidths=5, color="r", label="Optimal (Max Sharpe Ratio)")
     ax.legend()
     ax.set_xlabel("Risk", fontsize=titlesize, **hfont, labelpad=pad)
     ax.set_ylabel("Returns", fontsize=titlesize, **hfont, labelpad=pad) #expected return, based on annualized return calculated
@@ -163,9 +175,9 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     fig.suptitle(suptitle, fontsize=suptitlesize, **hfont)
 
     title = "\nBased on Returns from " + start + " to " + end
-    plt.title(label=title, fontsize=titlesize, **hfont, pad =10)
+    plt.title(label=title, fontsize=titlesize, **hfont, pad =20)
 
-    plt.legend(fontsize=labels)
+    plt.legend(fontsize=labels, labelcolor="black")
 
     plt.xticks(fontsize= ticks, **hfont)
 
@@ -182,7 +194,6 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     plt.savefig(bytes_image, format='png')
     bytes_image.seek(0)
 
-    # margins
 
     return bytes_image
 
@@ -221,8 +232,14 @@ def plot_weights2(weights, **kwargs):
     :rtype: BytesIO
     """
 
+    COLOR = '#E4E6EB'
+    plt.rcParams['text.color'] = COLOR
+    plt.rcParams['axes.labelcolor'] = COLOR
+    plt.rcParams['xtick.color'] = COLOR
+    plt.rcParams['ytick.color'] = COLOR
+
     #font config
-    matplotlib.rcParams['font.family'] = "sans-serif"
+    matplotlib.rcParams['font.family'] = "sans-serif" 
     # csfont = {'fontname':'Comic Sans MS'}
     hfont = {'fontname':'Hammersmith One'}
 
@@ -242,6 +259,9 @@ def plot_weights2(weights, **kwargs):
 
 
     fig, ax = plt.subplots()
+    ax.set_facecolor("#3A3B3C")
+    fig.patch.set_facecolor("#3A3B3C")
+
     ax.set_xlim([0, 1])
 
     rects = ax.barh(y_pos, vals, color="#047bff")
@@ -250,7 +270,7 @@ def plot_weights2(weights, **kwargs):
     ax.set_yticklabels(labels, fontsize= labelsize, **hfont)
 
     plt.xticks(fontsize= ticks, **hfont)
-    plt.yticks(fontsize= labelsize, **hfont, rotation=45)
+    plt.yticks(fontsize= labelsize, **hfont, rotation=0)
 
     ax.invert_yaxis()
 
@@ -261,12 +281,12 @@ def plot_weights2(weights, **kwargs):
 
     #bar labels
     for i, v in enumerate(vals):
-        ax.text(v, i, "{:.2f}%".format(v*100), color='black', rotation=45, fontsize=ticks, ha='left', va='center')
+        ax.text(v, i, "{:.2f}%".format(v*100), color='#E4E6EB', rotation=0, fontsize=labelsize, ha='left', va='center')
 
 
     #FORMATTING
     ax.tick_params(axis='both', which='major', pad=15)
-
+    ax.set_facecolor("#3A3B3C")
 
 
 

@@ -13,7 +13,7 @@
 </head>
 
 
-<body style="background-color:	#DCDCDC;">
+<body style="background-color:	#18191A;">
 
     <!-- FLASH MESSAGING -->
     <!-- see: http://flask.pocoo.org/docs/1.0/patterns/flashing/#flashing-with-categories -->
@@ -35,8 +35,8 @@
     {% set nav_links = [
     ('/', 'home1', 'Home')] -%}
     {% set active_page = active_page|default('index') -%}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="/"> <span style='font-size:20px;'> <img src="../static/favicon.ico" alt="icon" style="width:35px;height:35px;"> </span> Optimal Portfolio Calculator</a>
+    <nav style=" background-color: #047bff; color:#E4E6EB;font-family: 'Hammersmith One', sans-serif;text-shadow: 0 -1px 0 rgba(0,0,0,0.4);font-size:30px;" class="navbar navbar-expand-lg navbar-dark background-color">
+    <a style="color:#E4E6EB;font-family: 'Hammersmith One', sans-serif;text-shadow: 0 -1px 0 rgba(0,0,0,0.4);font-size:30px;" class="navbar-brand" href="/"> <span> <img src="../static/favicon.ico" alt="icon" style="width:35px;height:35px;"> </span>Optimal Portfolio Calculator</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -65,8 +65,13 @@
     </div>
 
     <!-- FOOTER -->
-    <div id="footer">
-        <hr>
+    <style>
+        .format{
+            color: #B0B3B8;
+        }
+    </style>
+    <div id="footer" class="format">
+        <hr style="background-color: #B0B3B8">
         &copy; Copyright 2020 William Everett |
         <a href="https://github.com/wae10/optimal-portfolio">source</a>
     </div>
