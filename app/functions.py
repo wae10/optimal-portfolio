@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 from dotenv import load_dotenv
 import os
@@ -107,6 +108,20 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     :return: bytes_image
     :rtype: BytesIO
     """
+
+    #font config
+    matplotlib.rcParams['font.family'] = "sans-serif"
+    # csfont = {'fontname':'Comic Sans MS'}
+    hfont = {'fontname':'Hammersmith One'}
+
+    #font size config
+    ticks = 25
+    labels = 30
+    titlesize = 40
+    suptitlesize = 60
+    pad = 15
+
+
     if cla.weights is None:
         cla.max_sharpe()
     optimal_ret, optimal_risk, _ = cla.portfolio_performance()
@@ -117,38 +132,47 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     mus, sigmas, _ = cla.frontier_values
 
     fig, ax = plt.subplots()
-    ax.plot(sigmas, mus, label="Efficient Frontier", linewidth=3)
+    ax.plot(
+        sigmas, 
+        mus, 
+        label="Efficient Frontier", 
+        color="#047bff", 
+        linewidth=4,
+        )
 
     if show_assets:
         ax.scatter(
             np.sqrt(np.diag(cla.cov_matrix)),
             cla.expected_returns,
-            s=120,
+            s=300,
             color="k",
             label="Assets",
+            zorder=2,
         )
         #NEW...
         for i in range(len(cla.tickers)):
-            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.0005,cla.expected_returns[i] + 0.0005, cla.tickers[i], fontsize=15, ha='center')
+            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.0005,cla.expected_returns[i] + 0.0005, cla.tickers[i], fontsize=labels, ha='center')
 
 
-    ax.scatter(optimal_risk, optimal_ret, marker="X", s=200, color="r", label="Optimal (Max Sharpe Ratio)")
+    ax.scatter(optimal_risk, optimal_ret, zorder=3, s=300, marker="x", linewidths=5, color="r", label="Optimal (Max Sharpe Ratio)")
     ax.legend()
-    ax.set_xlabel("Risk", fontsize=20)
-    ax.set_ylabel("Returns", fontsize=20) #expected return, based on annualized return calculated
+    ax.set_xlabel("Risk", fontsize=titlesize, **hfont, labelpad=pad)
+    ax.set_ylabel("Returns", fontsize=titlesize, **hfont, labelpad=pad) #expected return, based on annualized return calculated
 
-    title = "Efficient Frontier \n(based on rtns from " + start + " to " + end + ")"
+    suptitle = "Efficient Frontier" 
+    fig.suptitle(suptitle, fontsize=suptitlesize, **hfont)
 
-    plt.title(label=title,fontsize=27,pad=20)
+    title = "\nBased on Returns from " + start + " to " + end
+    plt.title(label=title, fontsize=titlesize, **hfont, pad =10)
 
-    plt.legend(prop={"size":13})
+    plt.legend(fontsize=labels)
 
-    plt.xticks(fontsize= 13)
+    plt.xticks(fontsize= ticks, **hfont)
 
-    plt.yticks(fontsize= 13)
+    plt.yticks(fontsize= ticks, **hfont)
 
-    width = 1000
-    height = 1000
+    width = 1500
+    height = 1500
     # fig = mplfigure.Figure(frameon=False)
     dpi = fig.get_dpi()
     fig.set_size_inches(width / dpi, height / dpi)
@@ -157,6 +181,8 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     bytes_image = io.BytesIO()
     plt.savefig(bytes_image, format='png')
     bytes_image.seek(0)
+
+    # margins
 
     return bytes_image
 
@@ -185,6 +211,7 @@ def plot_weights(weights, **kwargs):
     return ax
 
 
+#slightly changed to return BytesIO image now
 def plot_weights2(weights, **kwargs):
     """
     Plot the portfolio weights as a horizontal bar chart
@@ -193,21 +220,60 @@ def plot_weights2(weights, **kwargs):
     :return: bytes_image
     :rtype: BytesIO
     """
+
+    #font config
+    matplotlib.rcParams['font.family'] = "sans-serif"
+    # csfont = {'fontname':'Comic Sans MS'}
+    hfont = {'fontname':'Hammersmith One'}
+
+    #font size config
+    ticks = 25
+    labelsize = 35
+    titlesize = 60
+    pad = 20
+
     desc = sorted(weights.items(), key=lambda x: x[1], reverse=True)
     labels = [i[0] for i in desc]
     vals = [i[1] for i in desc]
 
     y_pos = np.arange(len(labels))
 
+    weights_list = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+
+
     fig, ax = plt.subplots()
-    ax.barh(y_pos, vals)
-    ax.set_xlabel("Weight")
+    ax.set_xlim([0, 1])
+
+    rects = ax.barh(y_pos, vals, color="#047bff")
+    ax.set_xlabel("Weight", fontsize= labelsize, **hfont, labelpad=pad)
     ax.set_yticks(y_pos)
-    ax.set_yticklabels(labels)
+    ax.set_yticklabels(labels, fontsize= labelsize, **hfont)
+
+    plt.xticks(fontsize= ticks, **hfont)
+    plt.yticks(fontsize= labelsize, **hfont, rotation=45)
+
     ax.invert_yaxis()
 
-    width = 1000
-    height = 1000
+    title = "Optimal Weights"
+    plt.title(label=title, fontsize=titlesize, pad=50, **hfont)
+
+
+
+    #bar labels
+    for i, v in enumerate(vals):
+        ax.text(v, i, "{:.2f}%".format(v*100), color='black', rotation=45, fontsize=ticks, ha='left', va='center')
+
+
+    #FORMATTING
+    ax.tick_params(axis='both', which='major', pad=15)
+
+
+
+
+    #IMAGE STUFF
+
+    width = 1500
+    height = 1500
     # fig = mplfigure.Figure(frameon=False)
     dpi = fig.get_dpi()
     fig.set_size_inches(width / dpi, height / dpi)

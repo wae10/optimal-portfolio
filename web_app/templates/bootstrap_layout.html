@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
     
 <head>
     {% block title %}
@@ -10,6 +11,7 @@
     <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
 
 </head>
+
 
 <body style="background-color:	#DCDCDC;">
 
@@ -55,7 +57,7 @@
     </nav>
 
 
-    <div class="container" style="margin-top:2em;">
+    <div class="container" style="margin-top:2em;" style="overscroll-behavior: auto;">
     <!-- PAGE CONTENTS -->
     <div id="content">
         {% block content %}

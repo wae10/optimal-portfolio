@@ -138,7 +138,7 @@ def enter_score():
 
 
     #GRAPH WEIGHTS PART
-    sharpe_pwt = graph_weights(tickers,start,end)
+    sharpe_pwt = graph_weights(lst,start,end)
     print("SHARPE_PWT", sharpe_pwt)
 
     bytesObj2 = plot_weights2(sharpe_pwt)
