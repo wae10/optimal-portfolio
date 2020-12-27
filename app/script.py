@@ -4,6 +4,7 @@ import pandas as pd
 import pandas_datareader as web
 from matplotlib.ticker import FuncFormatter
 
+
 from pypfopt.efficient_frontier import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import expected_returns
@@ -58,7 +59,7 @@ def optimal_shares(tickers, start, end, amount):
 
     #pt 4
     #Max Sharpe Ratio - Tangent to the EF
-    ef = EfficientFrontier(mu, Sigma, weight_bounds=(0,1)) #weight bounds in negative allows shorting of stocks
+    ef = EfficientFrontier(mu, Sigma, weight_bounds=(0,1), verbose=True) #weight bounds in negative allows shorting of stocks
     sharpe_pfolio=ef.max_sharpe() #May use add objective to ensure minimum zero weighting to individual stocks
     sharpe_pwt=ef.clean_weights()
     # print("Optimal Weights (max sharpe ratio):",sharpe_pwt)
@@ -75,6 +76,62 @@ def optimal_shares(tickers, start, end, amount):
     performance = ef.portfolio_performance()
 
     return allocation, leftover, performance
+
+
+def optimal_shares_min_vol(tickers, start, end, amount):
+    """Returns optimal llocation to individual assets to minimize volatility
+    Args:
+        tickers (list): list of desired stock tickers
+        start (string): starting date, yyyy-mm-dd
+        end (string): ending date, yyyy-mm-dd
+        amount (double): amount invested
+    """
+
+    if start is None or start == " ":
+        start = '2015-01-01'
+    if end is None or end == " ":
+        end = '2020-06-06'
+
+    #pt 1
+    thelen = len(tickers)
+    price_data = []
+    for ticker in range(thelen):
+        prices = web.DataReader(tickers[ticker], start=start, end = end, data_source='yahoo')
+        price_data.append(prices.assign(ticker=ticker)[['Adj Close']])
+        df_stocks = pd.concat(price_data, axis=1)
+    df_stocks.columns=tickers
+
+    #pt 2
+    nullin_df = pd.DataFrame(df_stocks,columns=tickers)
+    #print(nullin_df.isnull().sum())
+
+    #pt 3
+    #Annualized Return
+    mu = expected_returns.mean_historical_return(df_stocks)
+
+    #Sample Variance of Portfolio
+    Sigma = risk_models.sample_cov(df_stocks)
+
+    #pt 4
+    #Max Sharpe Ratio - Tangent to the EF
+    ef = EfficientFrontier(mu, Sigma, weight_bounds=(0,1), verbose=True) #weight bounds in negative allows shorting of stocks
+    min_vol_pfolio=ef.min_volatility() #May use add objective to ensure minimum zero weighting to individual stocks
+    min_vol_pwt=ef.clean_weights()
+    # print("Optimal Weights (max sharpe ratio):",sharpe_pwt)
+
+    #pt 5
+    latest_prices = get_latest_prices(df_stocks)
+    # Allocate Portfolio Value in $ as required to show number of shares/stocks to buy, also bounds for shorting will affect allocation
+    #Min Volatility Portfolio Allocation $10000
+    allocation, leftover = DiscreteAllocation(min_vol_pwt, latest_prices, total_portfolio_value=amount).lp_portfolio()
+    print("Optimal shares to buy:", allocation)
+    print("Leftover Fund value in $ after building minimum volatility portfolio is ${:.2f}".format(leftover))
+
+    #performance = "calculates the expected return, volatility and Sharpe ratio for the optimised portfolio."
+    performance = ef.portfolio_performance()
+
+    return allocation, leftover, performance
+
 
 def get_cla(tickers, start, end):
     """Returns CLA object for plot_efficient_frontier param as well as start / end dates
@@ -190,12 +247,54 @@ def graph_weights(tickers, start, end):
 
     #pt 4
     #Max Sharpe Ratio - Tangent to the EF
-    ef = EfficientFrontier(mu, Sigma, weight_bounds=(0,1)) #weight bounds in negative allows shorting of stocks
+    ef = EfficientFrontier(mu, Sigma, weight_bounds=(0,1), verbose=True) #weight bounds in negative allows shorting of stocks
     sharpe_pfolio=ef.max_sharpe() #May use add objective to ensure minimum zero weighting to individual stocks
     sharpe_pwt=ef.clean_weights()
     # print("Optimal Weights (max sharpe ratio):",sharpe_pwt)
 
     return sharpe_pwt
+
+def graph_weights_min_vol(tickers, start, end):
+    """Returns dict of optimal weights for tickers that minimizes portfolio volatility
+
+    Args:
+        tickers (list): list of desired stock tickers
+        start (string): starting date, yyyy-mm-dd
+        end (string): ending date, yyyy-mm-dd
+    """
+
+    if start is None or start == " ":
+        start = '2015-01-01'
+    if end is None or end == " ":
+        end = '2020-06-06'
+
+    thelen = len(tickers)
+    price_data = []
+    for ticker in range(thelen):
+        prices = web.DataReader(tickers[ticker], start=start, end = end, data_source='yahoo')
+        price_data.append(prices.assign(ticker=ticker)[['Adj Close']])
+        df_stocks = pd.concat(price_data, axis=1)
+    df_stocks.columns=tickers
+
+    #pt 2
+    nullin_df = pd.DataFrame(df_stocks,columns=tickers)
+    #print(nullin_df.isnull().sum())
+
+    #pt 3
+    #Annualized Return
+    mu = expected_returns.mean_historical_return(df_stocks)
+
+    #Sample Variance of Portfolio
+    Sigma = risk_models.sample_cov(df_stocks)
+
+    #pt 4
+    #Min Portfolio - Tangent to the EF
+    ef = EfficientFrontier(mu, Sigma, weight_bounds=(0,1), verbose=True) #weight bounds in negative allows shorting of stocks
+    min_vol_pfolio=ef.min_volatility() #May use add objective to ensure minimum zero weighting to individual stocks
+    min_vol_pwt=ef.clean_weights()
+    # print("Optimal Weights (max sharpe ratio):",sharpe_pwt)
+
+    return min_vol_pwt
 
 
 def print_menu():

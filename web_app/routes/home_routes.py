@@ -2,8 +2,8 @@
 
 from flask import Blueprint, render_template, redirect, request, flash, send_file, make_response, send_from_directory, url_for
 
-from app.script import get_cla, optimal_shares, graph_weights
-from app.functions import plot_efficient_frontier2, plot_weights2
+from app.script import get_cla, optimal_shares, graph_weights, optimal_shares_min_vol, graph_weights_min_vol
+from app.functions import plot_efficient_frontier2, plot_efficient_frontier3, plot_weights2
 
 
 
@@ -54,6 +54,7 @@ import matplotlib.figure as mplfigure
 class DataStore():
     num = None
     amount = None
+    objective = None
 
 data = DataStore()
 
@@ -75,9 +76,15 @@ def enter_num_stocks():
     print(params)
     num = int(params["stock_num"])
     amount = int(params["amount"])
+    objective = params["objective"]
     print(num)
+    
+    #update global class vars
     data.num = num
     data.amount = amount
+    data.objective = objective
+    print("OBJECTIVE:", objective)
+
     return render_template('home2.html', num=num, amount=amount)
 
 @home_routes.route("/plot/done", methods=["POST"])
@@ -99,17 +106,35 @@ def enter_score():
 
     cla, start, end = get_cla(lst, start, end)
 
+    amount = data.amount
 
-    bytesObj = plot_efficient_frontier2(cla, start, end, points=100, show_assets=True)
+    #which objective?
+    if data.objective == "Minimize Volatility":
+        bytesObj = plot_efficient_frontier3(cla, start, end, points=100, show_assets=True)
+        allocation, leftover, performance = optimal_shares_min_vol(lst, start, end, amount)
+        min_vol_pwt = graph_weights_min_vol(lst,start,end)
+        print("MIN_VOL_PWT", min_vol_pwt)
+
+        bytesObj2 = plot_weights2(min_vol_pwt)
+
+
+    #default to max sharpe ratio even if incorrect value
+    else:
+        bytesObj = plot_efficient_frontier2(cla, start, end, points=100, show_assets=True)
+        allocation, leftover, performance = optimal_shares(lst, start, end, amount)
+        #GRAPH WEIGHTS PART
+        sharpe_pwt = graph_weights(lst,start,end)
+        print("SHARPE_PWT", sharpe_pwt)
+
+        bytesObj2 = plot_weights2(sharpe_pwt)
+
 
 
     img = base64.b64encode(bytesObj.getvalue())
 
     #RESULTS DESCRIPTION
-    # amount = 10000 #default 10,0000 dollar amount invested
-    amount = data.amount
-    print("AMOUNT: ",)
-    allocation, leftover, performance = optimal_shares(lst, start, end, amount)
+
+    print("AMOUNT: ", amount)
 
     print("ALLOCATION: ", allocation)
 
@@ -137,16 +162,14 @@ def enter_score():
     length = len(allocation)
 
 
-    #GRAPH WEIGHTS PART
-    sharpe_pwt = graph_weights(lst,start,end)
-    print("SHARPE_PWT", sharpe_pwt)
-
-    bytesObj2 = plot_weights2(sharpe_pwt)
-
 
     img2 = base64.b64encode(bytesObj2.getvalue())
 
+    #tweaking 'objective' for results.html output
+    if data.objective == "Minimize Volatility":
+        objective = "minimum volatility portfolio"
+    else:
+        objective = "maximum sharpe ratio portfolio"
 
-
-    return render_template('results.html', amount=amount, img=img.decode('ascii'), img2=img2.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance)
+    return render_template('results.html', amount=amount, img=img.decode('ascii'), img2=img2.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance, objective=objective)
 

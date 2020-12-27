@@ -222,13 +222,24 @@
     <form action="/num-stocks" method="POST" >
 
         <h3 style="padding:0;">
-            <label>Number of Stocks &nbsp;&thinsp;&thinsp;&thinsp;&thinsp;<input class="right" type="number" name="stock_num" placeholder="i.e. 5"></label>
+            <label class="center" >Number of Stocks &nbsp;&thinsp;&thinsp;&thinsp;&thinsp;<input class="right" type="number" name="stock_num" placeholder="i.e. 5"></label>
             
         </h3>
         <h3 style="padding:0;">
-            <label class="justify">Investment Amount &nbsp;<input class="right" type="number" name="amount" placeholder="i.e. 10000"></label>
+            <label class="center">Investment Amount &nbsp;<input class="right" type="number" name="amount" placeholder="i.e. 10000"></label>
             
         </h3>
+
+        <h3 style="padding:0;">
+            <label class="center">Objective &nbsp;<input style="width:295px;" class="right" type="text" list="objectives" name="objective">
+                <datalist id="objectives">
+                    <option value="Maximize Sharpe Ratio">
+                    <option value="Minimize Volatility">
+                </datalist>
+            </label>
+            
+        </h3>
+
         <h3 class="center" style="padding:0;">
             <button>Submit</button>
         </h3>

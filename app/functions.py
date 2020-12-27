@@ -197,6 +197,112 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
 
     return bytes_image
 
+
+def plot_efficient_frontier3(cla, start, end, points=100, show_assets=True, **kwargs):
+    """
+    Plot the efficient frontier based on a CLA object, optimizes for minimum volatility
+
+    :param points: number of points to plot, defaults to 100
+    :type points: int, optional
+    :param show_assets: whether we should plot the asset risks/returns also, defaults to True
+    :type show_assets: bool, optional
+    :param filename: name of the file to save to, defaults to None (doesn't save)
+    :type filename: str, optional
+    :param showfig: whether to plt.show() the figure, defaults to True
+    :type showfig: bool, optional
+    :return: bytes_image
+    :rtype: BytesIO
+    """
+
+    COLOR = '#E4E6EB'
+    plt.rcParams['text.color'] = COLOR
+    plt.rcParams['axes.labelcolor'] = COLOR
+    plt.rcParams['xtick.color'] = COLOR
+    plt.rcParams['ytick.color'] = COLOR
+    # plt.rcParams['legend.fontcolor'] = COLOR
+    plt.rcParams['legend.frameon'] = True
+
+
+    #font config
+    matplotlib.rcParams['font.family'] = "sans-serif"
+    # csfont = {'fontname':'Comic Sans MS'}
+    hfont = {'fontname':'Hammersmith One'}
+
+    #font size config
+    ticks = 25
+    labels = 30
+    titlesize = 40
+    suptitlesize = 60
+    pad = 15
+
+
+    if cla.weights is None:
+        cla.min_volatility()
+    optimal_ret, optimal_risk, _ = cla.portfolio_performance()
+
+    if cla.frontier_values is None:
+        cla.efficient_frontier(points=points)
+
+    mus, sigmas, _ = cla.frontier_values
+
+    fig, ax = plt.subplots()
+    ax.set_facecolor("#3A3B3C")
+    fig.patch.set_facecolor("#3A3B3C")
+
+    ax.plot(
+        sigmas, 
+        mus, 
+        label="Efficient Frontier", 
+        color="#047bff", 
+        linewidth=4,
+        )
+
+    if show_assets:
+        ax.scatter(
+            np.sqrt(np.diag(cla.cov_matrix)),
+            cla.expected_returns,
+            s=350,
+            color="k",
+            label="Assets",
+            zorder=4,
+        )
+        #NEW...
+        for i in range(len(cla.tickers)):
+            plt.text(np.sqrt(np.diag(cla.cov_matrix))[i] + 0.0005,cla.expected_returns[i] + 0.0005, cla.tickers[i], fontsize=labels, ha='center', zorder=5)
+
+
+    ax.scatter(optimal_risk, optimal_ret, zorder=3, s=350, marker="x", linewidths=5, color="r", label="Optimal (Minimum Volatility)")
+    ax.legend()
+    ax.set_xlabel("Risk", fontsize=titlesize, **hfont, labelpad=pad)
+    ax.set_ylabel("Returns", fontsize=titlesize, **hfont, labelpad=pad) #expected return, based on annualized return calculated
+
+    suptitle = "Efficient Frontier" 
+    fig.suptitle(suptitle, fontsize=suptitlesize, **hfont)
+
+    title = "\nBased on Returns from " + start + " to " + end
+    plt.title(label=title, fontsize=titlesize, **hfont, pad =20)
+
+    plt.legend(fontsize=labels, labelcolor="black")
+
+    plt.xticks(fontsize= ticks, **hfont)
+
+    plt.yticks(fontsize= ticks, **hfont)
+
+    width = 1500
+    height = 1500
+    # fig = mplfigure.Figure(frameon=False)
+    dpi = fig.get_dpi()
+    fig.set_size_inches(width / dpi, height / dpi)
+
+    # here is the trick save your figure into a bytes object and you can afterwards expose it via flas
+    bytes_image = io.BytesIO()
+    plt.savefig(bytes_image, format='png')
+    bytes_image.seek(0)
+
+
+    return bytes_image
+
+
 def plot_weights(weights, **kwargs):
     """
     Plot the portfolio weights as a horizontal bar chart
@@ -220,7 +326,6 @@ def plot_weights(weights, **kwargs):
 
     _plot_io(**kwargs)
     return ax
-
 
 #slightly changed to return BytesIO image now
 def plot_weights2(weights, **kwargs):
