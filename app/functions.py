@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt, mpld3
 import matplotlib
 
 from dotenv import load_dotenv
@@ -195,7 +195,11 @@ def plot_efficient_frontier2(cla, start, end, points=100, show_assets=True, **kw
     bytes_image.seek(0)
 
 
-    return bytes_image
+    
+    html_fig = mpld3.fig_to_html(fig,figid='ef_chart')
+
+
+    return bytes_image, html_fig
 
 
 def plot_efficient_frontier3(cla, start, end, points=100, show_assets=True, **kwargs):
@@ -299,8 +303,10 @@ def plot_efficient_frontier3(cla, start, end, points=100, show_assets=True, **kw
     plt.savefig(bytes_image, format='png')
     bytes_image.seek(0)
 
+    html_fig = mpld3.fig_to_html(fig,figid='ef_chart')
 
-    return bytes_image
+
+    return bytes_image, html_fig
 
 
 def plot_weights(weights, **kwargs):
@@ -408,4 +414,6 @@ def plot_weights2(weights, **kwargs):
     plt.savefig(bytes_image, format='png')
     bytes_image.seek(0)
 
-    return bytes_image
+    html_fig = mpld3.fig_to_html(fig,figid='weights_chart')
+
+    return bytes_image, html_fig

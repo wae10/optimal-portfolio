@@ -103,30 +103,30 @@ def enter_score():
 
     start = params["start"]
     end = params["end"]
-
+ 
     cla, start, end = get_cla(lst, start, end)
 
     amount = data.amount
 
     #which objective?
     if data.objective == "Minimize Volatility":
-        bytesObj = plot_efficient_frontier3(cla, start, end, points=100, show_assets=True)
+        bytesObj, ef_html_fig = plot_efficient_frontier3(cla, start, end, points=100, show_assets=True)
         allocation, leftover, performance = optimal_shares_min_vol(lst, start, end, amount)
         min_vol_pwt = graph_weights_min_vol(lst,start,end)
         print("MIN_VOL_PWT", min_vol_pwt)
 
-        bytesObj2 = plot_weights2(min_vol_pwt)
+        bytesObj2, fig_html = plot_weights2(min_vol_pwt)
 
 
     #default to max sharpe ratio even if incorrect value
     else:
-        bytesObj = plot_efficient_frontier2(cla, start, end, points=100, show_assets=True)
+        bytesObj, ef_html_fig = plot_efficient_frontier2(cla, start, end, points=100, show_assets=True)
         allocation, leftover, performance = optimal_shares(lst, start, end, amount)
         #GRAPH WEIGHTS PART
         sharpe_pwt = graph_weights(lst,start,end)
         print("SHARPE_PWT", sharpe_pwt)
 
-        bytesObj2 = plot_weights2(sharpe_pwt)
+        bytesObj2, fig_html = plot_weights2(sharpe_pwt)
 
 
 
@@ -162,7 +162,6 @@ def enter_score():
     length = len(allocation)
 
 
-
     img2 = base64.b64encode(bytesObj2.getvalue())
 
     #tweaking 'objective' for results.html output
@@ -171,5 +170,20 @@ def enter_score():
     else:
         objective = "maximum sharpe ratio portfolio"
 
-    return render_template('results.html', amount=amount, img=img.decode('ascii'), img2=img2.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance, objective=objective)
 
+    #write fig_html to chart.html
+    Html_file= open("web_app/templates/chart.html","w")
+    Html_file.write(ef_html_fig)
+    Html_file.close()
+
+    return render_template('results.html', ef_html_fig=ef_html_fig, amount=amount, img=img.decode('ascii'), img2=img2.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance, objective=objective)
+
+@home_routes.route("/plot/chart")
+def interactive_chart():
+    print("INTERACTIVE CHART OPENING...")
+    return render_template("chart.html")
+
+@home_routes.route("/todo")
+def todo():
+    print("TODO...")
+    return render_template("todo.html")

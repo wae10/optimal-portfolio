@@ -7,3 +7,6 @@ Flask
 gunicorn
 python-dotenv
 PyPortfolioOpt
+
+#NEW AGAIN
+mpld3

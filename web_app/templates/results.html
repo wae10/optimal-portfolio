@@ -169,13 +169,23 @@
         }
         }
 
-        img.resize{
+        .resize{
             width: 100%;
             align-self: center;
             border: 3px solid #B0B3B8;
             /* height: 50%; */
 
         }
+
+        .resize-chart{
+            width: 100%;
+            align-self: center;
+            border: 3px solid #B0B3B8;
+            margin-left:0px;
+            /* height: 50%; */
+
+        }
+
 
         a{
             color: #047bff;
@@ -228,16 +238,24 @@
 
                     <h4 class="center"><a href="https://www.dummies.com/business/accounting/auditing/how-to-optimize-portfolio-risk/">What does this mean? &#129300;</a></h4>
 
+                    <h4 class="center"><a href="chart">Interactive Chart (temp)</a></h4>
+
                     <h3>
                     <!-- <div class="split right"> -->
                         <img class="resize" src="data:image/PNG;base64,{{img2}}">
                     <!-- </div> -->
                     </h3>
 
-        
+
                 <!-- </div> -->
             </div>
         </div>
+
+        <!-- </h3>
+            <div class = "resize-chart" >
+                {{ef_html_fig | safe }}
+            </div>
+        </h3> -->
         
     <!-- </div> -->
 

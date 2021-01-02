@@ -1,0 +1,230 @@
+{% extends "bootstrap_layout.html" %}
+
+{% block content %}
+
+
+<style>
+    .justify{
+        text-align: justify;
+    }
+
+    .center{
+        text-align: center;
+    }
+
+    .center-form{
+        /* text-align: center; */
+        right: 0;
+    }
+
+    .right{
+        right: 0;
+        color: #E4E6EB
+    }
+
+    h2:after {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        border-radius: 2px;
+        box-shadow: 
+            inset 0 1px 1px rgba(0,0,0,0.5), 
+            0 1px 1px rgba(255,255,255,0.3);
+    }
+
+    h2:after { background: #047bff; }
+    /* h3:after { background: #047bff; } */
+    /* h4:after { background: #047bff; } */
+
+    h1 {
+        font-size: 36px;
+        line-height: 40px;
+        margin: 1em 0 .6em 0;
+        font-weight: normal;
+        color: #E4E6EB;
+        font-family: 'Hammersmith One', sans-serif;
+        text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+        position: relative;
+        color: #047bff;
+    }
+
+    h2 {
+        margin: 1em 0 .6em 0;
+        padding: 0 0 0 20px;
+        font-weight: normal;
+        color: #E4E6EB;
+        font-family: 'Hammersmith One', sans-serif;
+        text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+        position: relative;
+        font-size: 45px;
+        line-height: 40px;
+    }
+
+    h3 {
+        margin: 1em 0 .6em 0;
+        padding: 0 0 0 20px;
+        font-weight: normal;
+        color: #E4E6EB;
+        font-family: 'Hammersmith One', sans-serif;
+        /* text-shadow: 0 -1px 0 rgba(0,0,0,0.4); */
+        position: relative;
+        font-size: 28px;
+        line-height: 40px;
+        font-family: 'Questrial', sans-serif;
+    }
+
+    h4 { 
+        margin: 1em 0 .6em 0;
+        padding: 0 0 0 15px;
+        font-weight: normal;
+        color: #E4E6EB;
+        font-family: 'Hammersmith One', sans-serif;
+        /* text-shadow: 0 -1px 0 rgba(0,0,0,0.4); */
+        position: relative;
+        font-size: 20px;
+        line-height: 20px;
+        font-family: 'Questrial', sans-serif;
+    }
+
+    .ital {
+        font-style: italic;
+    }
+
+
+    .hr2 {
+        /* width: 0%;
+        min-width: 75%;
+        max-width: 100%; */
+        /* margin: 1em 0 .6em 0; */
+        /* margin-left: 27%;
+        margin-right: 25%; */
+        /* padding: 0 0 0 30px; */
+        width: 50%;
+
+        /* left: 35px; */
+        /* margin-left: 15px; */
+        /* margin: 0 auto; */
+        /* border: none; */
+        /* border-left-width:20px; */
+        border-bottom: 5px solid #047bff;
+        position: relative;
+        /* transition: box-shadow 200ms ease-in-out; */
+
+        border-radius: 2px;
+        box-shadow: 
+            inset 0 1px 1px rgba(0,0,0,0.5), 
+            0 1px 1px rgba(255,255,255,0.3);
+
+    }
+
+    button {
+        background-color: #047bff; 
+        border-color: #B0B3B8;
+        border-width: 2px;
+        color: #E4E6EB;
+    }
+
+    button:hover {
+        color: #E4E6EB;
+        background-color: #047bff;
+        opacity: 75%;
+    }
+
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        animation-duration: 3s;
+        animation: fadein ease 3s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes slidein {
+        from {
+            margin-left: 100%;
+            width: 300%;
+        }
+
+        to {
+            margin-left: 0%;
+            width: 100%;
+        }
+    }
+
+    @keyframes fadein{
+        0% {opacity:0;}
+        100% {opacity:1;}
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+
+
+    a{
+        color: #047bff;
+    }
+
+
+    form{
+        /* position: relative; */
+        text-align: center;
+        align-items: stretch;
+        /* margin-left: 20%; */
+        /* margin-left: 20%; */
+        left: 0;
+    }
+
+    input{
+        /* position: relative; */
+        /* margin-right: 50px; */
+        /* position: relative; */
+        left: 0;
+        width: 170px;
+        background-color: #3A3B3C;
+    }
+
+    ::placeholder{
+        color: #B0B3B8;
+    }
+
+</style>
+
+
+<h2>
+    Future Expansions
+</h2>
+
+
+<h3>
+    <ul>
+        <li>
+            interactive charts (instead of static png's): Bokeh integration 
+        </li>
+        <li>
+            more constraint options for optimization
+        </li>
+        <li>
+            factor analyses
+        </li>
+        <li>
+            clean up code (move styles to css files, factor repeat functions into one, etc)
+        </li>
+    </ul>
+</h3>
+
+{% endblock %}
