@@ -50,11 +50,23 @@ import base64
 
 import matplotlib.figure as mplfigure
 
+
+
+
+
+###########################
+from app.bokeh import bokeh_weights_graph
+###########################
+
 #for storing variables
 class DataStore():
     num = None
     amount = None
     objective = None
+
+    #for bokeh stuff
+    div = None
+    script = None
 
 data = DataStore()
 
@@ -126,6 +138,13 @@ def enter_score():
         sharpe_pwt = graph_weights(lst,start,end)
         print("SHARPE_PWT", sharpe_pwt)
 
+        print("type(sharpe_pwt)", type(sharpe_pwt))
+
+        print("\nfor key, value in sharpe_pwt.items()")
+        for key, value in sharpe_pwt.items():
+            print (key)
+            print (value)
+
         bytesObj2, fig_html = plot_weights2(sharpe_pwt)
 
 
@@ -161,7 +180,6 @@ def enter_score():
     #length of 'allocation' dictionary
     length = len(allocation)
 
-
     img2 = base64.b64encode(bytesObj2.getvalue())
 
     #tweaking 'objective' for results.html output
@@ -170,18 +188,34 @@ def enter_score():
     else:
         objective = "maximum sharpe ratio portfolio"
 
-
     #write fig_html to chart.html
     Html_file= open("web_app/templates/chart.html","w")
     Html_file.write(ef_html_fig)
     Html_file.close()
 
-    return render_template('results.html', ef_html_fig=ef_html_fig, amount=amount, img=img.decode('ascii'), img2=img2.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance, objective=objective)
+    script, div = bokeh_weights_graph(sharpe_pwt)
+
+    data.script = script
+    data.div = div
+
+    print(script)
+
+    print("\n\n")
+
+    print(div)
+
+    return render_template('results.html', script=script, div=div, ef_html_fig=ef_html_fig, amount=amount, img=img.decode('ascii'), img2=img2.decode('ascii'), allocation=allocation, keys=keys, length=length, leftover=leftover, performance = performance, objective=objective)
 
 @home_routes.route("/plot/chart")
 def interactive_chart():
     print("INTERACTIVE CHART OPENING...")
     return render_template("chart.html")
+
+
+@home_routes.route("/plot/bokeh_temp")
+def bokeh_temp():
+    print("CLICKED BOKEH TEMP LINK...")
+    return render_template("bokeh_temp.html", div=data.div, script=data.script)
 
 @home_routes.route("/todo")
 def todo():
