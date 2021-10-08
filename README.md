@@ -1,4 +1,5 @@
 # Optimal Portfolio Solver
+## https://my-optimal-portfolio.herokuapp.com/
 ![efficient portfolio graph](https://github.com/wae10/optimal-portfolio/blob/main/images/efficient_portfolio.png)
 ![terminal menu](https://github.com/wae10/optimal-portfolio/blob/main/images/terminal.png)
 
